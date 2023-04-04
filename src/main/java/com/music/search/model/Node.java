@@ -5,10 +5,11 @@ import java.util.TreeSet;
 
 import lombok.Data;
 
+
 @Data
 public class Node {
 	long id;
-	String name;
+	String value;
 	String type;
 	HashMap<String, Node> child;
 	TreeSet<Node> cache;
@@ -21,12 +22,12 @@ public class Node {
 		this.id = id;
 	}
 
-	public String getName() {
-		return name;
+	public String getValue() {
+		return value;
 	}
 
-	public void setName(String name) {
-		this.name = name;
+	public void setValue(String value) {
+		this.value = value;
 	}
 
 	public String getType() {
@@ -44,6 +45,14 @@ public class Node {
 	public void setChild(HashMap<String, Node> child) {
 		this.child = child;
 	}
+	
+	public String getKey() {
+		return this.id + this.value + this.type;
+	}
+	
+	public void addChild(Node node) {
+		this.child.put(node.getKey(), node);
+	}
 
 	public TreeSet<Node> getCache() {
 		return cache;
@@ -57,19 +66,19 @@ public class Node {
 		this.cache.pollLast();
 	}
 
-	public Node(long id, String name, String type) {
+	public Node(long id, String value, String type) {
 		super();
 		this.id = id;
-		this.name = name;
+		this.value = value;
 		this.type = type;
 		this.child = new HashMap<String, Node>();
 		this.cache = new TreeSet<Node>();
 	}
 
-	public Node(long id, String name, String type, HashMap<String, Node> child, TreeSet<Node> cache) {
+	public Node(long id, String value, String type, HashMap<String, Node> child, TreeSet<Node> cache) {
 		super();
 		this.id = id;
-		this.name = name;
+		this.value = value;
 		this.type = type;
 		this.child = child;
 		this.cache = cache;

@@ -1,27 +1,49 @@
 package com.music.search.trieImpl;
 
 import java.util.HashMap;
+import java.util.List;
+
+import org.springframework.stereotype.Service;
 
 import com.music.search.model.Node;
 
+@Service
 public class BasicTrie {
 	private static int MAX_DEPTH = 40;
-	public HashMap<String, Node> createTrie(Node []arr){
-		Node root = new Node(0l, "", "", new HashMap<String, Node>(), new Node[10]);
+	public Node createTrie(List<Node> arr){
+		System.out.println(arr.size());
+		Node root = new Node(0l, "", "node");
 		
 		for(Node i: arr) {
-			String value = i.getName();
-			char []carr = i.getName().toCharArray();
+			String nval = i.getValue();
 			Node curr = root;
-			for(int c=0; c < carr.length; c++) {
-				String sub = value.substring(0, c+1);
+			for(int j=0; j < nval.length()-1 || j == MAX_DEPTH; j++) {
+				String sub = nval.substring(0, j+1);
 				HashMap<String, Node> child = curr.getChild();
-				if(child.containsKey(sub)) {
-					curr = curr.getChild().get(carr[c]);
+				if(!child.containsKey(0+sub+"node")) {
+					Node newNode = new Node(0, sub, "node");
+					curr.addChild(newNode);
 				}
 				
 			}
+			curr.addChild(i);
 		}
-	return null;
+	return root;
+	}
+	
+	public void traverse(Node root) {
+		Node curr = root;
+		for(String i: curr.getChild().keySet()) {
+			traverse(curr.getChild().get(i));
+		}
+		System.out.println(curr.getValue() + ", " +curr.getType());
+	}
+	
+	public void search(Node root, String term) {
+		Node curr = root;
+		for(String i: curr.getChild().keySet()) {
+			traverse(curr.getChild().get(i));
+		}
+		System.out.println(curr.getValue() + ", " +curr.getType());
 	}
 }
