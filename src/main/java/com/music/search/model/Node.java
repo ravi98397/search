@@ -5,14 +5,23 @@ import java.util.HashMap;
 import java.util.TreeSet;
 
 import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.IdClass;
 
 import lombok.Data;
 
 @Entity
+@IdClass(NodeId.class)
 @Data
 public class Node implements Serializable{
+	
+	@Id
 	private long id;
+	
+	@Id
 	private String value;
+	
+	@Id
 	private String type;
 	private long searched;  //stating no of time this text is inserted in text box
 	private long selected;  //no of times anything is selected
