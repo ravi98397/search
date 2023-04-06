@@ -16,6 +16,10 @@ public class NodeId implements Serializable {
 	
 	@Column(nullable = false)
 	private String type;
+	
+	public NodeId() {
+		
+	}
 
 	public NodeId(long id, String value, String type) {
 		super();

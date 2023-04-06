@@ -28,6 +28,11 @@ public class Node implements Serializable{
 	private HashMap<String, Node> child;
 	private TreeSet<Node> cache;
 	
+	public Node() {
+		this.child = new HashMap<String, Node>();
+		this.cache = new TreeSet<Node>(new NodeComparable());
+	}
+	
 	public Node(long id, String value, String type) {
 		super();
 		this.id = id;
@@ -103,7 +108,7 @@ public class Node implements Serializable{
 	}
 
 	public String getKey() {
-		return this.id + this.value + this.type;
+		return (this.id + this.value + this.type).toLowerCase();
 	}
 	
 	public void addChild(Node node) {
@@ -113,7 +118,6 @@ public class Node implements Serializable{
 
 	public void setCache(Node ele) {
 		if(this.cache.size() > 10) {
-			System.out.println("it rannnnnnnnnnnn");
 			this.cache.pollLast();
 		}
 		this.cache.add(ele);

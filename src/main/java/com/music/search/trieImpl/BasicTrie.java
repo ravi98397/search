@@ -1,7 +1,9 @@
 package com.music.search.trieImpl;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.TreeSet;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Service;
@@ -12,7 +14,8 @@ import com.music.search.model.Node;
 public class BasicTrie {
 	private static int MAX_DEPTH = 40;
 	
-	public Node createTrie(List<Node> arr){
+	public static Node createTrie(List<Node> arr){
+		System.out.println(arr.size());
 		Node root = new Node(0l, "", "node");
 		for(Node i: arr) {
 			String nval = i.getValue();
@@ -40,18 +43,24 @@ public class BasicTrie {
 		System.out.println(curr.getValue() + ", " +curr.getType() + ", " + curr.getCache().size());
 	}
 	
-	public void search(Node root, String term) {
+	public static TreeSet<Node> search(Node root, String term) {
 		Node curr = root;
 		for(int i = 0; i < term.length(); i++) {
 			Node next = new Node(0, term.substring(0, i+1), "node");
 			if(curr.getChild().containsKey(next.getKey())) {
 				curr = curr.getChild().get(next.getKey());
-			}
-			if(curr.getCache().size() == 0) {
-				System.out.println(curr.getValue());
 			}else {
-				curr.getCache().forEach(node -> System.out.println(node.getValue()));
+				System.out.println(next.getValue());
+				return curr.getCache();
 			}
+		}
+		
+		if(curr.getValue().equals(term)) {
+			TreeSet<Node> temp = new TreeSet<Node>();
+			temp.add(curr);
+			return temp;
+		}else {
+			return curr.getCache();
 		}
 	}
 }
